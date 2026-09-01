@@ -1,0 +1,19 @@
+:root {
+	--bg: #eeeae1;
+	--surface: #ffffff;
+	--surface-soft: #f4f1e9;
+	--ink: #16161a;
+	--ink-2: #2c2c33;
+	--green: #29a06a;
+	--green-dark: #228156;
+	--amber: #e8a33a;
+	--red: #d4533f;
+
+	--muted: rgba(22, 22, 26, 0.5);
+	--muted-2: rgba(22, 22, 26, 0.35);
+	--line: rgba(22, 22, 26, 0.1);
+
+	--font-sans:
+		'Zen Kaku Gothic New', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', system-ui, sans-serif;
+	--font-mono: 'Roboto Mono', ui-monospace, 'SF Mono', monospace;
+}
