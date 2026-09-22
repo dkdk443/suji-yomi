@@ -1,5 +1,6 @@
 import { getContext, setContext } from 'svelte';
 import { browser } from '$app/environment';
+import { rankForLevel } from '../data/ranks';
 
 const KEY = Symbol('profile-store');
 const STORAGE_KEY = 'sujiyomi:profile';
@@ -52,6 +53,10 @@ export class ProfileStore {
 	lastPlayedDate = $state<string | null>(null);
 	/** 直近のセッションでレベルアップしたかどうか（結果画面の表示に使う） */
 	leveledUpThisSession = $state(false);
+	/** 直近のセッションでランク（称号）が変わったかどうか */
+	rankedUpThisSession = $state(false);
+	/** ランクアップ演出用の遷移前ランク名 */
+	previousRankName = $state<string | null>(null);
 
 	constructor() {
 		const initial = loadInitial();
@@ -63,16 +68,36 @@ export class ProfileStore {
 	}
 
 	levelTarget = $derived(levelTarget(this.level));
+	rank = $derived(rankForLevel(this.level));
 
-	/** クイズセッション完了時に呼ぶ。ポイント加算・レベルアップ判定・連続日数更新をまとめて行う */
-	recordSession(pointsGained: number) {
+	/** セッション開始時に呼ぶ。レベルアップ／ランクアップの演出フラグをクリアする */
+	resetSessionFlags() {
 		this.leveledUpThisSession = false;
+		this.rankedUpThisSession = false;
+		this.previousRankName = null;
+	}
+
+	/**
+	 * 1問正解するたびに呼ぶ。ポイント加算・レベルアップ／ランクアップ判定・連続日数更新をまとめて行う。
+	 * セッション途中で離脱しても、そこまでに正解した分はここで確定させる。
+	 */
+	recordAnswer(pointsGained: number) {
+		const rankBefore = rankForLevel(this.level);
+
 		this.totalPoints += pointsGained;
 		this.levelPoints += pointsGained;
 		while (this.levelPoints >= levelTarget(this.level)) {
 			this.levelPoints -= levelTarget(this.level);
 			this.level += 1;
 			this.leveledUpThisSession = true;
+		}
+
+		const rankAfter = rankForLevel(this.level);
+		if (rankAfter.name !== rankBefore.name) {
+			if (!this.rankedUpThisSession) {
+				this.previousRankName = rankBefore.name;
+			}
+			this.rankedUpThisSession = true;
 		}
 
 		const today = todayKey();

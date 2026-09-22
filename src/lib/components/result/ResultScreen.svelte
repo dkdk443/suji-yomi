@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { useQuizStore } from '../../stores/quiz.svelte';
+	import RankUpBanner from './RankUpBanner.svelte';
 	import ResultSummaryCard from './ResultSummaryCard.svelte';
 	import ReviewList from './ReviewList.svelte';
 	import ShareActions from './ShareActions.svelte';
@@ -9,6 +10,7 @@
 </script>
 
 <div class="screen">
+	<RankUpBanner />
 	<ResultSummaryCard
 		total={store.totalPoints}
 		correctCount={store.correctCount}

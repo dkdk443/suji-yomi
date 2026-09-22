@@ -45,6 +45,7 @@ export class QuizStore {
 		this.hintStage = 1;
 		this.picked = null;
 		this.results = [];
+		this.profile.resetSessionFlags();
 	}
 
 	start() {
@@ -73,6 +74,8 @@ export class QuizStore {
 				companyName: question.answerName,
 				tag: question.sector.split(' /')[0]
 			});
+			// セッションを最後まで終えなくても、正解した分はその場でプロフィールに確定させる
+			this.profile.recordAnswer(gained);
 			this.screen = 'answer';
 		}, 520);
 	}
@@ -84,7 +87,6 @@ export class QuizStore {
 	next() {
 		if (this.isLastQuestion) {
 			this.screen = 'result';
-			this.profile.recordSession(this.totalPoints);
 			return;
 		}
 		this.questionIndex += 1;

@@ -2,12 +2,21 @@
 	import type { Snippet } from 'svelte';
 	import TabBar from './TabBar.svelte';
 	import TermSheet from '../terms/TermSheet.svelte';
+	import { useQuizStore } from '../../stores/quiz.svelte';
 
 	interface Props {
 		children: Snippet;
 	}
 
 	let { children }: Props = $props();
+	const store = useQuizStore();
+	let contentEl: HTMLDivElement | undefined = $state();
+
+	// 画面が切り替わるたびにスクロール位置を先頭へ戻す（前の画面の途中位置を引き継がないように）
+	$effect(() => {
+		void store.screen;
+		contentEl?.scrollTo(0, 0);
+	});
 </script>
 
 <div class="phone">
@@ -18,7 +27,7 @@
 			<div class="battery"></div>
 		</div>
 	</div>
-	<div class="content">
+	<div class="content" bind:this={contentEl}>
 		{@render children()}
 	</div>
 	<TabBar />

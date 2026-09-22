@@ -11,7 +11,7 @@
 
 <Card>
 	<div class="row">
-		<div class="label">読解レベル {profile.level} ・ {DEMO_PROFILE.readingLevelTitle}</div>
+		<div class="label">読解レベル {profile.level} ・ {profile.rank.name}</div>
 		<div class="pt"><span class="mono">{profile.levelPoints}</span> / {profile.levelTarget} pt</div>
 	</div>
 	<div class="bar"><ProgressBar {percent} /></div>
