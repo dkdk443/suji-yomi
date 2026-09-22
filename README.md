@@ -8,12 +8,10 @@
 
 **Demo: https://suji-yomi.vercel.app/**
 
-<!-- ここにスクリーンショットを貼る -->
-<p align="center">
-  <img src="./docs/screenshot-home.png" width="260" alt="ホーム画面" />
-  <img src="./docs/screenshot-quiz.png" width="260" alt="出題画面" />
-  <img src="./docs/screenshot-result.png" width="260" alt="結果画面" />
-</p>
+<img width="1440" height="811" alt="スクリーンショット 2026-09-22 18 07 49" src="https://github.com/user-attachments/assets/5ef070ed-ba86-4b64-b287-1362231f3efa" />
+
+<img width="1440" height="811" alt="スクリーンショット 2026-09-22 18 08 00" src="https://github.com/user-attachments/assets/b10bd007-abd1-407e-b185-fb1790c61500" />
+
 
 ## 概要
 
